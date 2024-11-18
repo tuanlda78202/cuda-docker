@@ -1,0 +1,73 @@
+# .dockerignore
+# Version control
+.git
+.gitignore
+.gitattributes
+.github/
+
+# Development artifacts
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+**/*.so
+**/*.egg
+**/*.egg-info
+**/*.coverage
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/.coverage
+**/.tox/
+
+# Environment and IDE
+.env
+.venv
+env/
+venv/
+ENV/
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Build and documentation
+build/
+dist/
+docs/
+*.log
+*.md
+!README.md
+
+# Node.js
+**/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+.docker/
+docker-compose*.yml
+Dockerfile*
+!Dockerfile
+
+# Jupyter
+.ipynb_checkpoints
+**/*.ipynb
+
+# Temporary files
+**/*.tmp
+**/*.temp
+**/*.bak
+**/tmp/
+**/temp/
+
+# Custom project files
+**/*.zip
+**/*.tar.gz
+**/*.tar
+**/*.7z
+**/*.rar
