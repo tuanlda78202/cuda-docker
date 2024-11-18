@@ -31,6 +31,22 @@ COPY --from=neovim-builder /usr/local/share/nvim /usr/local/share/nvim
 # Install essential packages in a single layer
 RUN apt-get update && apt-get install -y --no-install-recommends \
   software-properties-common \
+  make \
+  build-essential \
+  libssl-dev \
+  zlib1g-dev \
+  libbz2-dev \
+  libreadline-dev \
+  libsqlite3-dev \
+  wget \
+  llvm \
+  libncursesw5-dev \
+  xz-utils \
+  tk-dev \
+  libxml2-dev \
+  libxmlsec1-dev \
+  libffi-dev \
+  liblzma-dev \
   && add-apt-repository ppa:deadsnakes/ppa -y \
   && apt-get update && apt-get install -y --no-install-recommends \
   python${PYTHON_VERSION} \
@@ -41,6 +57,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   tmux \
   git \
   curl \
+  nano \
   ca-certificates \
   unzip \
   fd-find \
@@ -53,6 +70,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && update-locale LANG=en_US.UTF-8 \
   && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_VERSION} 100 \
   && rm -rf /var/lib/apt/lists/*
+
+# Install pyenv before Python setup
+RUN curl https://pyenv.run | bash
 
 # Set environment variables
 ENV LANG=en_US.UTF-8 \
