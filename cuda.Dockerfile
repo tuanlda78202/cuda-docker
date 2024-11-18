@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   cmake \
   gettext \
   && rm -rf /var/lib/apt/lists/*
-WORKDIR /code
+WORKDIR /root
 RUN git clone https://github.com/neovim/neovim \
   && cd neovim \
   && make CMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -39,6 +39,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libreadline-dev \
   libsqlite3-dev \
   wget \
+  tree \
   llvm \
   libncursesw5-dev \
   xz-utils \
@@ -71,8 +72,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && update-alternatives --install /usr/bin/python python /usr/bin/python${PYTHON_VERSION} 100 \
   && rm -rf /var/lib/apt/lists/*
 
-# Install pyenv before Python setup
-RUN curl https://pyenv.run | bash
+# Add Conda installation and setup
+RUN wget -v https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh \
+  && bash ~/miniconda.sh -b -p /opt/conda \
+  && rm ~/miniconda.sh \
+  && /opt/conda/bin/conda init zsh \
+  && /opt/conda/bin/conda install python=3.11 -y \
+  && /opt/conda/bin/conda config --set auto_activate_base true
+
+# Add Conda to PATH
+ENV PATH=/opt/conda/bin:$PATH \
+  CONDA_DEFAULT_ENV=base
 
 # Set environment variables
 ENV LANG=en_US.UTF-8 \
@@ -118,10 +128,10 @@ COPY vim_setup /root/.config/nvim/
 COPY dotfiles/.zshrc /root/.zshrc
 COPY dotfiles/.p10k.zsh /root/.p10k.zsh
 COPY scripts/create-user.sh /start-scripts/
-COPY scripts/jupyterhub_config.py /code/
+COPY scripts/jupyterhub_config.py /root/
 
 # Set working directory
-WORKDIR /code
+WORKDIR /root
 
 RUN echo '#!/bin/bash\n\
   service ssh start\n\

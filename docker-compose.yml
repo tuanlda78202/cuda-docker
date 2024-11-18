@@ -11,11 +11,12 @@ services:
       - "2222:2222"  # SSH port
       - "8888:8888"  # JupyterHub port
     volumes:
-      - ./workspace:/code/workspace         # Project files
+      - /dev/shm:/dev/shm
+      - ./workspace:/root/workspace         # Project files
       - ~/.ssh:/root/.ssh                   # SSH keys
       - ~/.gitconfig:/root/.gitconfig       # Git configuration
-      - ./data:/code/data                   # Data directory
-      - ./models:/code/models               # ML models
+      - ./data:/root/data                   # Data directory
+      - ./models:/root/models               # LLM models
     deploy:
       resources:
         reservations:
