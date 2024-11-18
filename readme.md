@@ -8,14 +8,14 @@
     - [Direct Container Access](#direct-container-access)
   - [Development Environment Features](#development-environment-features)
     - [Included Tools](#included-tools)
-    - [GPU Monitoring](#gpu-monitoring)
+    - [Resource Monitoring](#resource-monitoring)
     - [Jupyter Services](#jupyter-services)
   - [Customization](#customization)
     - [Adding New Users](#adding-new-users)
     - [Updating CUDA Configurations](#updating-cuda-configurations)
   - [Troubleshooting](#troubleshooting)
-  - [Notes](#notes)
-  - [Security Considerations](#security-considerations)
+  - [Acknowledgement](#acknowledgement)
+  - [Contributors](#contributors)
 
 | ![nvidia-docker](https://github.com/tuanlda78202/cuda-docker/blob/main/public/banner.png) | 
 |:--:| 
@@ -99,8 +99,8 @@ docker exec -it cuda-dev-container zsh
 - zsh with Oh My Zsh
 - Various development tools (git, conda, etc.)
 
-### GPU Monitoring
-Monitor GPU usage using either:
+### Resource Monitoring
+Monitor CPU/GPU usage using either:
 ```bash
 nvitop     # GPU-specific monitoring
 btop       # System-wide monitoring
@@ -115,7 +115,7 @@ jupyterhub -f /root/jupyterhub_config.py
 
 2. Access Jupyter in your browser:
 ```
-http://localhost:8000
+http://localhost:8888
 ```
 
 ## Customization
@@ -154,18 +154,10 @@ CompileFlags:
    - Verify port 8888 is not blocked
    - Check logs: `docker logs cuda-dev-container`
 
-## Notes
+## Acknowledgement
+This repository is based on [docker-env](https://github.com/tikikun/my_container) by Alan Dao and has been modified for an improved UI and enhanced usability in LLM workflows.
 
-- The root password is set to "helloworld" by default. Change it for production use.
-- The container uses zsh as the default shell with Oh My Zsh configured.
-- Neovim is built from source to ensure the latest version.
-- The environment includes full CUDA development tools and can be used for GPU-accelerated applications.
-
-## Security Considerations
-
-For production environments:
-1. Change the default root password
-2. Disable root SSH access
-3. Create non-root users
-4. Configure SSH key authentication
-5. Update the JupyterHub configuration with proper authentication
+## Contributors 
+<a href="https://github.com/tuanlda78202/cuda-docker/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=tuanlda78202/cod" /></a>
+</a>
