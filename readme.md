@@ -33,8 +33,14 @@ docker build -t cuda-dev -f cuda.Dockerfile .
 ```
 
 ## Running the Container
-
-### Basic Usage
+### Using Docker-Compose
+1. Start the container 
+   `docker compose up -d`
+2. Stop the container 
+   `docker compose stop`
+3. Down the container 
+   `docker compose down`
+### Using Dockerfile
 
 1. Start the container with GPU support:
 ```bash
@@ -45,9 +51,7 @@ docker run -d --gpus all \
   cuda-dev
 ```
 
-### Advanced Usage
-
-For development work, mount your source code and configure additional ports:
+2. For development work, mount your source code and configure additional ports:
 ```bash
 docker run -d --gpus all --name cuda-dev \
   -p 2222:2222 \

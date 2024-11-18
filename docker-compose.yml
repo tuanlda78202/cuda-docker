@@ -1,0 +1,25 @@
+services:
+  dev:
+    container_name: cuda-dev-container
+    build:
+      context: .
+      dockerfile: cuda.Dockerfile
+    runtime: nvidia  # Enable NVIDIA runtime
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    ports:
+      - "2222:2222"  # SSH port
+      - "8888:8888"  # JupyterHub port
+    volumes:
+      - ./workspace:/code/workspace         # Project files
+      - ~/.ssh:/root/.ssh                   # SSH keys
+      - ~/.gitconfig:/root/.gitconfig       # Git configuration
+      - ./data:/code/data                   # Data directory
+      - ./models:/code/models               # ML models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
