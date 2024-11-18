@@ -1,6 +1,4 @@
-# CUDA Development Environment
-
-This repository contains a Docker environment for CUDA development with Neovim, Python, Jupyter, and various development tools. The environment is based on NVIDIA's CUDA 12.4.1 image with Ubuntu 22.04.
+# CUDA Docker
 
 ## Prerequisites
 
@@ -13,7 +11,7 @@ This repository contains a Docker environment for CUDA development with Neovim, 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/tuanlda78202/docker-env.git
+git clone https://github.com/tuanlda78202/cuda-docker.git
 cd docker-env
 ```
 

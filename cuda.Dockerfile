@@ -46,7 +46,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   fd-find \
   nodejs \
   npm \
-  nvidia-utils-525 \
+  nvidia-utils-535 \
   openssh-server \
   locales \
   && locale-gen en_US.UTF-8 \
@@ -87,6 +87,7 @@ RUN poetry config virtualenvs.in-project true
 
 # Setup zsh environment
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+  && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k \
   && git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions \
   && git clone --depth 1 https://github.com/z-shell/F-Sy-H.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/F-Sy-H \
   && git clone --depth 1 https://github.com/zsh-users/zsh-completions.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-completions \
@@ -95,6 +96,7 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 # Copy configuration files
 COPY vim_setup /root/.config/nvim/
 COPY dotfiles/.zshrc /root/.zshrc
+COPY dotfiles/.p10k.zsh /root/.p10k.zsh
 COPY scripts/create-user.sh /start-scripts/
 COPY scripts/jupyterhub_config.py /code/
 
