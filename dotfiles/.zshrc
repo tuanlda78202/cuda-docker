@@ -1,6 +1,11 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+. /opt/conda/etc/profile.d/conda.sh
+conda activate base
+source /opt/conda/bin/activate
+source activate base
+
 # Path to your oh-my-zsh installation.
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"

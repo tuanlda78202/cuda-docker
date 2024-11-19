@@ -1,21 +1,6 @@
 # CUDA Docker on Ubuntu Server
-- [CUDA Docker on Ubuntu Server](#cuda-docker-on-ubuntu-server)
-  - [Installation Steps](#installation-steps)
-    - [Build using Docker Directly](#build-using-docker-directly)
-    - [Build using Docker Compose](#build-using-docker-compose)
-  - [Accessing the Container](#accessing-the-container)
-    - [SSH Access](#ssh-access)
-    - [Direct Container Access](#direct-container-access)
-  - [Development Environment Features](#development-environment-features)
-    - [Included Tools](#included-tools)
-    - [Resource Monitoring](#resource-monitoring)
-    - [Jupyter Services](#jupyter-services)
-  - [Customization](#customization)
-    - [Adding New Users](#adding-new-users)
-    - [Updating CUDA Configurations](#updating-cuda-configurations)
-  - [Troubleshooting](#troubleshooting)
-  - [Acknowledgement](#acknowledgement)
-  - [Contributors](#contributors)
+
+[Installation](#installation-steps) | [Container Access](#accessing-the-container) | [Features](#development-environment-features) | [Customization](#customization)
 
 | ![nvidia-docker](https://github.com/tuanlda78202/cuda-docker/blob/main/public/banner.png) | 
 |:--:| 
@@ -51,9 +36,12 @@ docker run -d \
 
 1. Build the container (only): 
 ```bash
+# without cache
+docker compose build --no-cache
+# with cache
 docker compose build
 ```
-2. Build and run using docker-compose:
+2. Build and run on detach mode:
 ```bash
 docker compose up -d
 ```
@@ -93,7 +81,7 @@ docker exec -it cuda-dev-container zsh
 ### Included Tools
 - CUDA 12.4.1 with cuDNN
 - Python 3.11
-- Neovim (latest version)
+- Neovim
 - JupyterHub/JupyterLab
 - tmux
 - zsh with Oh My Zsh
@@ -135,7 +123,7 @@ The clangd configuration for CUDA is located at `/root/.config/clangd/config.yam
 ```yaml
 CompileFlags:
   Add:
-    - --cuda-gpu-arch=sm_86  # Change this to match your GPU architecture
+    - --cuda-gpu-arch=sm_86
 ```
 
 ## Troubleshooting
@@ -155,7 +143,7 @@ CompileFlags:
    - Check logs: `docker logs cuda-dev-container`
 
 ## Acknowledgement
-This repository is based on [docker-env](https://github.com/tikikun/my_container) by Alan Dao and has been modified for an improved UI and enhanced usability in LLM workflows.
+This repository is based on [docker-env](https://github.com/tikikun/my_container) by Alan Dao and has been modified for an improved flexibility and enhanced usability in LLM workflows.
 
 ## Contributors 
 <a href="https://github.com/tuanlda78202/cuda-docker/graphs/contributors">
