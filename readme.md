@@ -141,6 +141,9 @@ CompileFlags:
    - Check if the service is running: `ps aux | grep jupyter`
    - Verify port 8888 is not blocked
    - Check logs: `docker logs cuda-dev-container`
+  
+4. Cannot `apt install` new packages:
+   - Update `apt-get`: `apt-get update`
 
 ## Acknowledgement
 This repository is based on [docker-env](https://github.com/tikikun/my_container) by Alan Dao and has been modified for an improved flexibility and enhanced usability in LLM workflows.
