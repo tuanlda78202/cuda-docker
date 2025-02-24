@@ -13,15 +13,15 @@ log() {
     local message=$@
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
     case $level in
-        "INFO")
-            echo -e "${GREEN}[INFO]${NC} ${timestamp} - $message"
-            ;;
-        "WARN")
-            echo -e "${YELLOW}[WARN]${NC} ${timestamp} - $message"
-            ;;
-        "ERROR")
-            echo -e "${RED}[ERROR]${NC} ${timestamp} - $message"
-            ;;
+    "INFO")
+        echo -e "${GREEN}[INFO]${NC} ${timestamp} - $message"
+        ;;
+    "WARN")
+        echo -e "${YELLOW}[WARN]${NC} ${timestamp} - $message"
+        ;;
+    "ERROR")
+        echo -e "${RED}[ERROR]${NC} ${timestamp} - $message"
+        ;;
     esac
 }
 
@@ -73,25 +73,45 @@ install_p10k() {
 install_plugins() {
     log "INFO" "Installing ZSH plugins..."
     local plugins_path="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins"
-    
+
     # zsh-autosuggestions
     if [ ! -d "$plugins_path/zsh-autosuggestions" ]; then
         git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions "$plugins_path/zsh-autosuggestions"
     fi
-    
+
     # fast-syntax-highlighting
     if [ ! -d "$plugins_path/F-Sy-H" ]; then
         git clone --depth 1 https://github.com/z-shell/F-Sy-H.git "$plugins_path/F-Sy-H"
     fi
-    
+
     # zsh-completions
     if [ ! -d "$plugins_path/zsh-completions" ]; then
         git clone --depth 1 https://github.com/zsh-users/zsh-completions "$plugins_path/zsh-completions"
     fi
-    
+
     # zsh-history-substring-search
     if [ ! -d "$plugins_path/zsh-history-substring-search" ]; then
         git clone --depth 1 https://github.com/zsh-users/zsh-history-substring-search "$plugins_path/zsh-history-substring-search"
+    fi
+}
+
+# Install conda
+install_conda() {
+    log "INFO" "Installing conda..."
+    CONDA_INSTALLER="Anaconda3-latest-Linux-x86_64.sh"
+    CONDA_PATH="/opt/conda"
+
+    if [ ! -d "$CONDA_PATH" ]; then
+        log "INFO" "Downloading Anaconda installer..."
+        wget "https://repo.anaconda.com/archive/$CONDA_INSTALLER" -O /tmp/$CONDA_INSTALLER
+
+        log "INFO" "Installing Anaconda..."
+        bash /tmp/$CONDA_INSTALLER -b -p $CONDA_PATH
+
+        log "INFO" "Cleaning up installer..."
+        rm /tmp/$CONDA_INSTALLER
+    else
+        log "WARN" "Conda is already installed. Skipping..."
     fi
 }
 
@@ -99,14 +119,14 @@ install_plugins() {
 setup_zshrc() {
     log "INFO" "Setting up .zshrc..."
     local zshrc="$HOME/.zshrc"
-    
+
     # Backup existing .zshrc if it exists
     if [ -f "$zshrc" ]; then
         cp "$zshrc" "$zshrc.backup.$(date +%Y%m%d_%H%M%S)"
     fi
 
     # Create new .zshrc
-    cat > "$zshrc" << 'EOF'
+    cat >"$zshrc" <<'EOF'
 # Enable Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -147,6 +167,14 @@ alias ...='cd ../..'
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
+
+# Conda initialization
+if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then
+    . "/opt/conda/etc/profile.d/conda.sh"
+else
+    export PATH="/opt/conda/bin:$PATH"
+fi
+conda activate base
 EOF
 }
 
@@ -164,14 +192,15 @@ set_zsh_default() {
 # Main function
 main() {
     log "INFO" "Starting ZSH setup..."
-    
+
     install_dependencies
     install_oh_my_zsh
     install_p10k
     install_plugins
+    install_conda
     setup_zshrc
     set_zsh_default
-    
+
     log "INFO" "Setup completed successfully!"
     log "INFO" "Please log out and log back in to start using ZSH."
     log "INFO" "After logging back in, run 'p10k configure' to set up your Powerlevel10k theme."
