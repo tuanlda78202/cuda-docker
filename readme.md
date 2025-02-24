@@ -129,8 +129,8 @@ CompileFlags:
 ## Install extensions locally
 
 ```bash
-chmod +x setup_local.sh
-./setup-zsh.sh
+chmod +x install.sh
+./install.sh
 ```
 Restart terminal and setup `p10k configure`
 
