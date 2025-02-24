@@ -126,6 +126,14 @@ CompileFlags:
     - --cuda-gpu-arch=sm_86
 ```
 
+## Install extensions locally
+
+```bash
+chmod +x setup_local.sh
+./setup-zsh.sh
+```
+Restart terminal and setup `p10k configure`
+
 ## Troubleshooting
 
 1. If you can't connect via SSH, ensure:
