@@ -98,7 +98,7 @@ install_plugins() {
 # Install conda
 install_conda() {
     log "INFO" "Installing conda..."
-    CONDA_INSTALLER="Anaconda3-latest-Linux-x86_64.sh"
+    CONDA_INSTALLER="Anaconda3-2024.10-1-Linux-x86_64.sh"
     CONDA_PATH="/opt/conda"
 
     if [ ! -d "$CONDA_PATH" ]; then
