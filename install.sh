@@ -95,23 +95,14 @@ install_plugins() {
     fi
 }
 
-# Install conda
-install_conda() {
-    log "INFO" "Installing conda..."
-    CONDA_INSTALLER="Anaconda3-2024.10-1-Linux-x86_64.sh"
-    CONDA_PATH="/opt/conda"
-
-    if [ ! -d "$CONDA_PATH" ]; then
-        log "INFO" "Downloading Anaconda installer..."
-        wget "https://repo.anaconda.com/archive/$CONDA_INSTALLER" -O /tmp/$CONDA_INSTALLER
-
-        log "INFO" "Installing Anaconda..."
-        bash /tmp/$CONDA_INSTALLER -b -p $CONDA_PATH
-
-        log "INFO" "Cleaning up installer..."
-        rm /tmp/$CONDA_INSTALLER
+# Install UV
+install_uv() {
+    log "INFO" "Installing UV..."
+    if curl -LsSf https://astral.sh/uv/install.sh | sh; then
+        log "INFO" "UV installed successfully."
     else
-        log "WARN" "Conda is already installed. Skipping..."
+        log "ERROR" "Failed to install UV."
+        exit 1
     fi
 }
 
@@ -123,6 +114,7 @@ setup_zshrc() {
     # Backup existing .zshrc if it exists
     if [ -f "$zshrc" ]; then
         cp "$zshrc" "$zshrc.backup.$(date +%Y%m%d_%H%M%S)"
+        log "INFO" "Existing .zshrc backed up to $zshrc.backup.$(date +%Y%m%d_%H%M%S)"
     fi
 
     # Create new .zshrc
@@ -168,13 +160,10 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
-# Conda initialization
-if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then
-    . "/opt/conda/etc/profile.d/conda.sh"
-else
-    export PATH="/opt/conda/bin:$PATH"
+# UV
+if command -v uv &> /dev/null; then
+    eval "$(uv generate-shell-completion zsh)"
 fi
-conda activate base
 EOF
 }
 
@@ -197,7 +186,7 @@ main() {
     install_oh_my_zsh
     install_p10k
     install_plugins
-    install_conda
+    install_uv
     setup_zshrc
     set_zsh_default
 
