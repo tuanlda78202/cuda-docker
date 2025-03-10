@@ -161,9 +161,8 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
 # UV
-if command -v uv &> /dev/null; then
-    eval "$(uv generate-shell-completion zsh)"
-fi
+eval "$(uv generate-shell-completion zsh)"
+source $HOME/.local/bin/env
 EOF
 }
 
