@@ -114,7 +114,6 @@ setup_zshrc() {
     # Backup existing .zshrc if it exists
     if [ -f "$zshrc" ]; then
         cp "$zshrc" "$zshrc.backup.$(date +%Y%m%d_%H%M%S)"
-        log "INFO" "Existing .zshrc backed up to $zshrc.backup.$(date +%Y%m%d_%H%M%S)"
     fi
 
     # Create new .zshrc
@@ -160,9 +159,15 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
-# UV
-eval "$(uv generate-shell-completion zsh)"
-source $HOME/.local/bin/env
+# UV setup (only if installed)
+if command -v uv >/dev/null 2>&1; then
+  eval "$(uv generate-shell-completion zsh)"
+fi
+
+# Source env file if it exists
+if [[ -f $HOME/.local/bin/env ]]; then
+  source $HOME/.local/bin/env
+fi
 EOF
 }
 
