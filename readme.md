@@ -1,10 +1,13 @@
-# CUDA Docker on Ubuntu Server
+<div align="center">
+  
+# CUDA Docker for Server
 
 [Installation](#installation-steps) | [Container Access](#accessing-the-container) | [Features](#development-environment-features) | [Customization](#customization)
 
-| ![nvidia-docker](https://github.com/tuanlda78202/cuda-docker/blob/main/public/banner.png) | 
-|:--:| 
-| NVIDIA GPU within Docker Containers|
+<img alt="image" src="public/banner.png" />
+
+</div>
+
 ## Installation Steps
 
 First, clone the repository:
