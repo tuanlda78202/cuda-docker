@@ -155,11 +155,3 @@ Restart terminal and setup `p10k configure`
   
 4. Cannot `apt install` new packages:
    - Update `apt-get`: `apt-get update`
-
-## Acknowledgement
-This repository is based on [docker-env](https://github.com/tikikun/my_container) by Alan Dao and has been modified for an improved flexibility and enhanced usability in LLM workflows.
-
-## Contributors 
-<a href="https://github.com/tuanlda78202/cuda-docker/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=tuanlda78202/cod" /></a>
-</a>
